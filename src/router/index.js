@@ -23,75 +23,119 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Index.vue'),
+	//二级路由
 	children:[{
+		//跳转到首页欢迎组件视图中
 		path:'/index/',
 		name:'Welcom',
 		component:Welcome
 	},{
+		//跳转到 <销售机会管理> 组件视图中
 		path:'/index/saleChanceList',
 		name:'SaleChanceList',
 		component:()=>import('../views/sale/SaleChanceList.vue')
 	},{
+		//跳转到 <新建销售机会> 组件视图中
+		path:'/index/dueSaleChance',
+		name:'DueSaleChance',
+		component:()=>import('../views/sale/DueSaleChance.vue')
+	},{
+		//跳转到 <指派销售机会> 组件视图中
+		path:'/index/editSaleChance',
+		name:'EditSaleChance',
+		component:()=>import('../views/sale/EditSaleChance.vue')
+	},{
+		//跳转到 <编辑销售机会> 组件视图中
+		path:'/index/addSaleChance',
+		name:'AddSaleChance',
+		component:()=>import('../views/sale/AddSaleChance.vue')
+	},{
+		//跳转到 <客户开发计划> 组件视图中
 		path:'/index/salePlanList',
 		name:'SalePlanList',
 		component:()=>import('../views/sale/SalePlanList.vue')
 	},{
+		//跳转到 <制定开发计划> 组件视图中
+		path:'/index/drawUpPlan',
+		name:'DrawUpPlan',
+		component:()=>import('../views/sale/DrawUpPlan.vue')
+	},{
+		//跳转到 <执行开发计划> 组件视图中
+		path:'/index/exeSalePlan',
+		name:'ExeSalePlan',
+		component:()=>import('../views/sale/ExeSalePlan.vue')
+	},{
+		//跳转到客户信息管理组件视图中
 		path:'/index/clientInfoList',
 		name:'ClientInfoList',
 		component:()=>import('../views/cust/ClientInfoList.vue')
 	},{
+		//跳转到客户流失管理组件视图中
 		path:'/index/clientLoseEarlyWarningList',
 		name:'ClientLoseEarlyWarningList',
 		component:()=>import('../views/cust/ClientLoseEarlyWarningList.vue')
 	},{
+		//跳转到服务创建组件视图中
 		path:'/index/addClientServer',
 		name:'AddClientServer',
 		component:()=>import('../views/server/AddClientServer.vue')
 	},{
+		//跳转到服务分配组件视图中
 		path:'/index/dueClientServerList',
 		name:'DueClientServerList',
 		component:()=>import('../views/server/DueClientServerList.vue')
 	},{
+		//跳转到服务处理组件视图中
 		path:'/index/handleClientServerList',
 		name:'HandleClientServerList',
 		component:()=>import('../views/server/HandleClientServerList.vue')
 	},{
+		//跳转到服务反馈组件视图中
 		path:'/index/clientServerFeedbackList',
 		name:'ClientServerFeedbackList',
 		component:()=>import('../views/server/ClientServerFeedbackList.vue')
 	},{
+		//跳转到服务归档组件视图中
 		path:'/index/clientServerDetailedList',
 		name:'ClientServerDetailedList',
 		component:()=>import('../views/server/ClientServerDetailedList.vue')
 	},{
+		//跳转到客户贡献分析组件视图中
 		path:'/index/clientContribution',
 		name:'ClientContribution',
 		component:()=>import('../views/rept/ClientContribution.vue')
 	},{
+		//跳转到客户构成分析组件视图中
 		path:'/index/clientConstitute',
 		name:'ClientConstitute',
 		component:()=>import('../views/rept/ClientConstitute.vue')
 	},{
+		//跳转到客户服务分析组件视图中
 		path:'/index/clientServer',
 		name:'ClientServer',
 		component:()=>import('../views/rept/ClientServer.vue')
 	},{
+		//跳转到客户流失分析组件视图中
 		path:'/index/clientLoss',
 		name:'ClientLoss',
 		component:()=>import('../views/rept/ClientLoss.vue')
 	},{
+		//跳转到企业客户等级管理组件视图中
 		path:'/index/dataClientLevel',
 		name:'DataClientLevel',
 		component:()=>import('../views/basd/level/DataClientLevel.vue')
 	},{
+		//跳转到服务类型管理组件视图中
 		path:'/index/dataServerType',
 		name:'DataServerType',
 		component:()=>import('../views/basd/serverType/DataServerType.vue')
 	},{
+		//跳转到地区管理组件视图中
 		path:'/index/dataArea',
 		name:'DataArea',
 		component:()=>import('../views/basd/area/DataArea.vue')
 	},{
+		//跳转到用户管理组件视图中
 		path:'/index/users',
 		name:'DataUsers',
 		component:()=>import('../views/basd/users/DataUsers.vue')
