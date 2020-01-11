@@ -82,7 +82,7 @@
 			}
 		},
 		mounted() {
-			document.getElementById('main').style.height = document.body.clientHeight - 122 + 'px';
+			document.getElementById('main').style.height = document.body.clientHeight - 110 + 'px';
 			this.bodyHeight = document.body.clientHeight;
 			window.onresize = () => {
 				this.bodyHeight = document.body.clientHeight;
@@ -90,7 +90,7 @@
 		},
 		watch: {
 			bodyHeight: function() {
-				document.getElementById('main').style.height = this.bodyHeight - 122 + 'px';
+				document.getElementById('main').style.height = this.bodyHeight - 110 + 'px';
 			}
 		},
 		methods: {
@@ -191,7 +191,7 @@
 
 	.el-main {
 		background-color: #FFFFFF;
-		padding: 10px 20px 10px 10px;
+		padding: 10px 20px 0px 10px;
 	}
 
 	body>.el-container {
