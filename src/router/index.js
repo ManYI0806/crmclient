@@ -35,17 +35,17 @@ const routes = [
 		name:'SaleChanceList',
 		component:()=>import('../views/sale/SaleChanceList.vue')
 	},{
-		//跳转到 <新建销售机会> 组件视图中
+		//跳转到 <指派销售机会> 组件视图中
 		path:'/index/dueSaleChance',
 		name:'DueSaleChance',
 		component:()=>import('../views/sale/DueSaleChance.vue')
 	},{
-		//跳转到 <指派销售机会> 组件视图中
+		//跳转到 <编辑销售机会> 组件视图中
 		path:'/index/editSaleChance',
 		name:'EditSaleChance',
 		component:()=>import('../views/sale/EditSaleChance.vue')
 	},{
-		//跳转到 <编辑销售机会> 组件视图中
+		//跳转到 <新建销售机会> 组件视图中
 		path:'/index/addSaleChance',
 		name:'AddSaleChance',
 		component:()=>import('../views/sale/AddSaleChance.vue')
