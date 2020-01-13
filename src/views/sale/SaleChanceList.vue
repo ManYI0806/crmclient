@@ -28,26 +28,28 @@
 				<el-button type="success" @click="addSaleChance" size="mini">新建</el-button>
 			</el-form-item>
 		</el-form>
-		
-		<el-table :data="results.data" stripe style="width: 100%" :header-cell-style="{color:'#333',fontSize:'14px',fontWeight:900,borderTop:'1px solid #EBEEF5',backgroundColor:'#F5F5F5',textAlign:'center'}">
-			<el-table-column prop="chanceId" label="编号"></el-table-column>
-			<el-table-column prop="chanceCustName" label="客户名称"></el-table-column>
-			<el-table-column prop="chanceTitle" label="概要"></el-table-column>
-			<el-table-column prop="chanceLinkman" label="联系人"></el-table-column>
+
+		<el-table :data="results.data" stripe style="width: 100%;text-align: center;" :cell-style="{padding:'0',textAlign:'center'}"
+		 :row-style="{padding:'0'}" :header-cell-style="{color:'#333',fontSize:'14px',fontWeight:900,borderTop:'1px solid #EBEEF5',backgroundColor:'#F5F5F5',textAlign:'center'}">
+			<el-table-column prop="chanceId" label="编号" width="80px"></el-table-column>
+			<el-table-column prop="chanceCustName" label="客户名称" width="230px"></el-table-column>
+			<el-table-column prop="chanceTitle" label="概要" width="300px"></el-table-column>
+			<el-table-column prop="chanceLinkman" label="联系人" width="100px"></el-table-column>
 			<el-table-column prop="chanceTel" label="联系人电话"></el-table-column>
-			<el-table-column prop="chanceCreateDate" label="创建时间"></el-table-column>
+			<el-table-column prop="chanceCreateDate" label="创建时间" width="100px"></el-table-column>
 			<el-table-column label="操作">
 				<template slot-scope="scope">
-					<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-					<el-button type="text" size="small">编辑</el-button>
+					<el-button type="text" size="small" @click="dueSaleChance(scope.row)">指派</el-button>
+					<el-button type="text" size="small" @click="editSaleChance(scope.row)">编辑</el-button>
+					<el-button type="text" size="small" @click="delSaleChance(scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
-		
+
 		<el-pagination background @current-change="handleCurrentChange" layout="total, prev, pager, next, jumper" :total="results.totalRow"
 		 :page-size="$store.state.maxPageNum">
 		</el-pagination>
-		
+
 	</div>
 </template>
 
@@ -60,32 +62,82 @@
 				params: { //模糊查询的输入条件参数
 					chanceCustName: '',
 					chanceTitle: '',
-					chanceLinkman: ''
+					chanceLinkman: '',
+					chanceStatus: 0
 				}
 			}
 		},
+		created() {
+			this.fenye(1)
+		},
 		methods: {
+			fenye(pageNum) {
+				this.$fenye('selectSaleChanceCount', 'selectSaleChancePaging', this.params, pageNum, this.$store.state.maxPageNum,
+					(response) => {
+						this.results = response;
+					})
+			},
+			handleCurrentChange(val) {
+				this.fenye(val);
+			},
+			//清空查询条件
 			clear() {
-
+				this.params.chanceCustName = '';
+				this.params.chanceTitle = '';
+				this.params.chanceLinkman = '';
 			},
+			//查询功能
 			selectSaleChance() {
-				console.log('submit!');
+				this.fenye(1);
 			},
+			//新建功能
 			addSaleChance() {
 				this.$router.push('/index/addSaleChance');
 			},
-			handleCurrentChange(val) {
-				console.log('当前页: ${val}');
+			//指派功能
+			dueSaleChance(row) {
+				this.$router.push({
+					path: '/index/dueSaleChance',
+					query: {
+						chanceId: row.chanceId,
+						chanceCreateId: row.chanceCreateId
+					}
+				});
 			},
-			handleClick(row) {
-				console.log(row);
+			//编辑功能
+			editSaleChance(row) {
+				this.$router.push({
+					path: '/index/editSaleChance',
+					query: {
+						chanceId: row.chanceId,
+						chanceCreateId: row.chanceCreateId
+					}
+				})
+			},
+			//删除功能
+			delSaleChance(row) {
+				if (!confirm('确认删除' + row.chanceCustName + '的数据么')) {
+					return;
+				}
+				this.$axios.post('deleteSaleChanceById', {
+						chanceId: row.chanceId
+					})
+					.then((response) => {
+						if (response.data == 1) {
+							this.fenye(1);
+						} else {
+							alert('删除失败');
+						}
+					})
+					.catch((error) => {
+						console.log(error);
+					})
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	
 	.el-breadcrumb {
 		background-color: #D9EDF7;
 		border-radius: 5px;
@@ -102,8 +154,8 @@
 	.demo-form-inline {
 		margin: 12px 0;
 	}
-	
-	.el-form-item{
+
+	.el-form-item {
 		margin-bottom: 0;
 	}
 
@@ -112,6 +164,7 @@
 	}
 
 	.el-pagination {
+		margin-top: 15px;
 		text-align: center;
 	}
 </style>
