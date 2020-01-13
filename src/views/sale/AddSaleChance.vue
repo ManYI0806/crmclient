@@ -9,62 +9,53 @@
 			<el-breadcrumb-item>新建销售机会</el-breadcrumb-item>
 		</el-breadcrumb>
 
-		<el-form :inline="true" :model="params" class="demo-form-inline">
-			<el-row>
-				<el-col>
+		<el-row>
+			<el-col :span="12">
+				<el-form :inline="true" ref="saleChance" :model="saleChance" label-width="100px">
 					<el-form-item label="销售机会编号">
-						<el-input v-model="params.chanceCustName" size="small" style="width: 400px;"></el-input>
+						<el-input :disabled="true" v-model="saleChance.chanceId" size="small" style="width: 400px;"></el-input>
 					</el-form-item>
+					<el-form-item label="客户名称">
+						<el-input v-model="saleChance.chanceCustName" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+					<el-form-item label="概要">
+						<el-input v-model="saleChance.chanceTitle" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+					<el-form-item label="联系人">
+						<el-input v-model="saleChance.chanceLinkman" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+					<el-form-item label="机会描述">
+						<el-input type="textarea" :rows="3" v-model="saleChance.chanceDesc" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="addSaleChance" size="mini">保存</el-button>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="success" @click="goback" size="mini">返回</el-button>
+					</el-form-item>
+				</el-form>
+			</el-col>
+			
+			<el-col :span="12">
+				<el-form :inline="true" ref="saleChance" :model="saleChance" label-width="100px">
 					<el-form-item label="机会来源">
-						<el-input v-model="params.chanceCustName" size="small" style="width: 400px;"></el-input>
+						<el-input v-model="saleChance.chanceSource" size="small" style="width: 400px;"></el-input>
 					</el-form-item>
-				</el-col>
-			</el-row>
-
-			<el-row>
-				<el-form-item label="客户名称">
-					<el-input v-model="params.chanceCustName" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-				<el-form-item label="成功几率(%)">
-					<el-input v-model="params.chanceTitle" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-			</el-row>
-
-			<el-row>
-				<el-form-item label="概要">
-					<el-input v-model="params.chanceCustName" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-				<el-form-item label="联系人电话">
-					<el-input v-model="params.chanceTitle" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-			</el-row>
-
-			<el-row>
-				<el-form-item label="联系人">
-					<el-input v-model="params.chanceCustName" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-				<el-form-item label="创建人">
-					<el-input v-model="params.chanceTitle" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-			</el-row>
-
-			<el-row>
-				<el-form-item label="机会描述">
-					<el-input type="textarea" :rows="3" v-model="params.chanceCustName" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-				<el-form-item label="创建时间">
-					<el-input v-model="params.chanceTitle" size="small" style="width: 400px;"></el-input>
-				</el-form-item>
-			</el-row>
-
-			<el-form-item>
-				<el-button type="primary" @click="selectSaleChance" size="mini">保存</el-button>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="success" @click="addSaleChance" size="mini">返回</el-button>
-			</el-form-item>
-		</el-form>
-
+					<el-form-item label="成功机率(%)">
+						<el-input v-model="saleChance.chanceRate" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+					<el-form-item label="联系人电话">
+						<el-input v-model="saleChance.chanceTel" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+					<el-form-item label="创建人">
+						<el-input :disabled="true" :value="this.$getSessionStorage('sysuser').userName" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+					<el-form-item label="创建时间">
+						<el-input :disabled="true" v-model="saleChance.chanceCreateDate" size="small" style="width: 400px;"></el-input>
+					</el-form-item>
+				</el-form>
+			</el-col>
+		</el-row>
 	</div>
 </template>
 
@@ -72,30 +63,36 @@
 	export default {
 		data() {
 			return {
-				pageNum: 1, //用于文本框中用户输入的内容，表示跳转到哪一页
-				results: {},
-				params: { //模糊查询的输入条件参数
+				saleChance: {
+					chanceId: '',
+					chanceSource: '',
 					chanceCustName: '',
+					chanceRate: '',
 					chanceTitle: '',
-					chanceLinkman: ''
+					chanceTel: '',
+					chanceLinkman: '',
+					chanceCreateId: this.$getSessionStorage('sysuser').userId,
+					chanceDesc: '',
+					chanceCreateDate: this.$getCurDate()
 				}
 			}
 		},
 		methods: {
-			clear() {
-
-			},
-			selectSaleChance() {
-				console.log('submit!');
-			},
 			addSaleChance() {
-				this.$router.push('/index/addSaleChance');
+				this.$axios.post('insertSaleChance', this.saleChance)
+					.then((response) => {
+						if (response.data == 1) {
+							this.$router.push('/index/saleChanceList');
+						} else {
+							alert('添加失败');
+						}
+					})
+					.catch((error) => {
+						console.log(error);
+					})
 			},
-			handleCurrentChange(val) {
-				console.log('当前页: ${val}');
-			},
-			handleClick(row) {
-				console.log(row);
+			goback() {
+				this.$router.push('/index/saleChanceList');
 			}
 		}
 	}
@@ -117,5 +114,23 @@
 
 	.demo-form-inline {
 		margin: 15px 0;
+	}
+
+	.el-form-item {
+		margin-bottom: 0;
+	}
+
+	.el-button {
+		margin-top: 20px;
+	}
+
+	.el-button--primary {
+		margin-left: 100px;
+		background-color: #5BC0DE;
+	}
+
+	.el-button--success {
+		background-color: #337AB7;
+		border-color: #2E6DA4;
 	}
 </style>
