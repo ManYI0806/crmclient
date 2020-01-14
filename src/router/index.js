@@ -125,20 +125,60 @@ const routes = [
 		name:'DataClientLevel',
 		component:()=>import('../views/basd/level/DataClientLevel.vue')
 	},{
+		//跳转到新建企业客户等级管理组件视图中
+		path:'/index/addClientLevel',
+		name:'AddClientLevel',
+		component:()=>import('../views/basd/level/AddClientLevel.vue')
+	},{
+		//跳转到编辑企业客户等级管理组件视图中
+		path:'/index/editClientLevel',
+		name:'EditClientLevel',
+		component:()=>import('../views/basd/level/EditClientLevel.vue')
+	},{
 		//跳转到服务类型管理组件视图中
 		path:'/index/dataServerType',
 		name:'DataServerType',
 		component:()=>import('../views/basd/serverType/DataServerType.vue')
+	},{
+		//跳转到新建服务类型管理组件视图中
+		path:'/index/addServerType',
+		name:'AddServerType',
+		component:()=>import('../views/basd/serverType/AddServerType.vue')
+	},{
+		//跳转到编辑服务类型管理组件视图中
+		path:'/index/editServerType',
+		name:'EditServerType',
+		component:()=>import('../views/basd/serverType/EditServerType.vue')
 	},{
 		//跳转到地区管理组件视图中
 		path:'/index/dataArea',
 		name:'DataArea',
 		component:()=>import('../views/basd/area/DataArea.vue')
 	},{
+		//跳转到新建地区管理组件视图中
+		path:'/index/addArea',
+		name:'AddArea',
+		component:()=>import('../views/basd/area/AddArea.vue')
+	},{
+		//跳转到编辑地区管理组件视图中
+		path:'/index/editArea',
+		name:'EditArea',
+		component:()=>import('../views/basd/area/EditArea.vue')
+	},{
 		//跳转到用户管理组件视图中
 		path:'/index/users',
 		name:'DataUsers',
 		component:()=>import('../views/basd/users/DataUsers.vue')
+	},{
+		//跳转到用户管理组件视图中
+		path:'/index/addusers',
+		name:'AddUsers',
+		component:()=>import('../views/basd/users/AddUsers.vue')
+	},{
+		//跳转到用户管理组件视图中
+		path:'/index/editusers',
+		name:'EditUsers',
+		component:()=>import('../views/basd/users/EditUsers.vue')
 	}]
   }
 ]
