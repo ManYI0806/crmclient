@@ -13,7 +13,7 @@
 					</el-form-item>
 					<el-form-item label="客户名称">
 						<el-select v-model="clientServer.clientCode">
-							<el-option v-for="(item,index) in clientInfoList" :value="item.clientName"></el-option>
+							<el-option v-for="(item,index) in clientInfoList" :label="item.clientName" :value="item.clientCode"></el-option>
 						</el-select>
 					</el-form-item>
 				</el-col>
