@@ -15,10 +15,10 @@
 					<el-form-item label="销售机会编号">
 						<el-input :disabled="true" v-model="saleChance.chanceId" size="small" style="width: 400px;"></el-input>
 					</el-form-item>
-					<el-form-item label="客户名称">
+					<el-form-item label="客户名称"><span class="sign">*</span>
 						<el-input v-model="saleChance.chanceCustName" size="small" style="width: 400px;"></el-input>
 					</el-form-item>
-					<el-form-item label="概要">
+					<el-form-item label="概要"><span class="sign">*</span>
 						<el-input v-model="saleChance.chanceTitle" size="small" style="width: 400px;"></el-input>
 					</el-form-item>
 					<el-form-item label="联系人">
@@ -40,7 +40,7 @@
 					<el-form-item label="机会来源">
 						<el-input v-model="saleChance.chanceSource" size="small" style="width: 400px;"></el-input>
 					</el-form-item>
-					<el-form-item label="成功机率(%)">
+					<el-form-item label="成功机率(%)"><span class="sign">*</span>
 						<el-input v-model="saleChance.chanceRate" size="small" style="width: 400px;"></el-input>
 					</el-form-item>
 					<el-form-item label="联系人电话">
@@ -98,6 +98,10 @@
 		},
 		methods: {
 			editSaleChance() {
+				if (this.saleChance.chanceCustName == '' || this.saleChance.chanceTitle == '' || this.saleChance.chanceRate == '') {
+					alert('*号为必填项,不能为空');
+					return;
+				}
 				this.$axios.post('editSaleChance', this.saleChance)
 					.then((response) => {
 						if (response.data == 1) {
@@ -122,7 +126,8 @@
 		height: 36px;
 		line-height: 36px;
 		padding-left: 15px;
-		font-weight: 00;
+		/* font-weight: 00; */
+		margin-bottom: 15px;
 	}
 
 	.el-icon-s-home {
@@ -139,5 +144,12 @@
 
 	.el-button--primary {
 		margin-left: 100px;
+	}
+
+	.sign {
+		color: red;
+		margin-left: -11px;
+		margin-right: 4px;
+		font-weight: bold;
 	}
 </style>
