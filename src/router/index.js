@@ -166,19 +166,39 @@ const routes = [
 		component:()=>import('../views/basd/area/EditArea.vue')
 	},{
 		//跳转到用户管理组件视图中
-		path:'/index/users',
+		path:'/index/dataUsers',
 		name:'DataUsers',
 		component:()=>import('../views/basd/users/DataUsers.vue')
 	},{
 		//跳转到用户管理组件视图中
-		path:'/index/addusers',
+		path:'/index/addUsers',
 		name:'AddUsers',
 		component:()=>import('../views/basd/users/AddUsers.vue')
 	},{
 		//跳转到用户管理组件视图中
-		path:'/index/editusers',
+		path:'/index/editUsers',
 		name:'EditUsers',
 		component:()=>import('../views/basd/users/EditUsers.vue')
+	},{
+		//跳转到用户管理组件视图中
+		path:'/index/clientConstitute',
+		name:'ClientConstitute',
+		component:()=>import('../views/rept/ClientConstitute.vue')
+	},{
+		//跳转到用户管理组件视图中
+		path:'/index/clientContribution',
+		name:'ClientContribution',
+		component:()=>import('../views/rept/ClientContribution.vue')
+	},{
+		//跳转到用户管理组件视图中
+		path:'/index/clientLoss',
+		name:'ClientLoss',
+		component:()=>import('../views/rept/ClientLoss.vue')
+	},{
+		//跳转到用户管理组件视图中
+		path:'/index/clientServer',
+		name:'ClientServer',
+		component:()=>import('../views/rept/ClientServer.vue')
 	}]
   }
 ]
