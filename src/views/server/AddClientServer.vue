@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-breadcrumb separator="/">
-			<el-breadcrumb-item><i class="el-icon-s-home"></i></el-breadcrumb-item>
+			<i class="el-icon-s-home"></i>
 			<el-breadcrumb-item>服务管理</el-breadcrumb-item>
 			<el-breadcrumb-item>服务创建</el-breadcrumb-item>
 		</el-breadcrumb>
@@ -70,8 +70,12 @@
 				this.$axios.post('insertClientServerjh', this.clientServer)
 					.then((response) => {
 						if (response.data == 1) {
-							console.log(this.clientServer)
-							this.$router.push('/index/addClientServer');
+							alert('sucess');
+							this.clientServer.serverContent = '';
+							this.clientServer.serverTypeId = '';
+							this.clientServer.serverTitle = '';
+							this.clientServer.clientCode = '';
+
 						} else {
 							alert('添加失败！');
 						}
@@ -82,7 +86,7 @@
 			}
 		},
 		created() {
-			this.$axios.post('selectDataServerTypeAlljh')
+			this.$axios.post('selectDataServerTypeAll')
 				.then((response) => {
 					this.dataServerTypeList = response.data;
 
