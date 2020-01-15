@@ -57,7 +57,7 @@
 								<el-menu-item index="/index/dataClientLevel">数据字典-客户等级</el-menu-item>
 								<el-menu-item index="/index/dataServerType">数据字典-服务类别</el-menu-item>
 								<el-menu-item index="/index/dataArea">数据字典-地区</el-menu-item>
-								<el-menu-item index="/index/users">数据字典-用户</el-menu-item>
+								<el-menu-item index="/index/dataUsers">数据字典-用户</el-menu-item>
 							</el-menu-item-group>
 						</el-submenu>
 					</el-menu>
