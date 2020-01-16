@@ -39,9 +39,25 @@
 			<el-table-column prop="chanceCreateDate" label="创建时间" width="100px"></el-table-column>
 			<el-table-column label="操作">
 				<template slot-scope="scope">
-					<el-button type="text" size="small" @click="dueSaleChance(scope.row)">指派</el-button>
-					<el-button type="text" size="small" @click="editSaleChance(scope.row)">编辑</el-button>
-					<el-button type="text" size="small" @click="delSaleChance(scope.row)">删除</el-button>
+					<el-row type="flex" justify="center">
+						<el-col>
+							<el-button type="text" title="指派" size="small" :style="{display:visibleCancel}" @click="dueSaleChance(scope.row)">
+								<i class="el-icon-s-unfold"></i>
+							</el-button>
+						</el-col>
+						<el-col>
+							<el-button type="text" title="编辑" size="small" :style="{display:scope.row.chanceCreateId==userId?'inline':'none'}"
+							 @click="editSaleChance(scope.row)">
+								<i class="el-icon-edit-outline"></i>
+							</el-button>
+						</el-col>
+						<el-col>
+							<el-button type="text" title="删除" size="small" :style="{display:scope.row.chanceCreateId==userId?'inline':'none'}"
+							 @click="delSaleChance(scope.row)">
+								<i class="el-icon-delete"></i>
+							</el-button>
+						</el-col>
+					</el-row>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -64,11 +80,17 @@
 					chanceTitle: '',
 					chanceLinkman: '',
 					chanceStatus: 0
-				}
+				},
+				visibleCancel: '',
+				userRoleId: this.$getSessionStorage('sysuser').userRoleId,
+				userId: this.$getSessionStorage('sysuser').userId
 			}
 		},
 		created() {
-			this.fenye(1)
+			if (this.userRoleId != 2) {
+				this.visibleCancel = 'none';
+			}
+			this.fenye(1);
 		},
 		methods: {
 			fenye(pageNum) {
@@ -158,9 +180,13 @@
 	.el-form-item {
 		margin-bottom: 0;
 	}
-
-	.el-button {
-		letter-spacing: 4px;
+	
+	.el-table .el-button span i{
+		font-size: 16px;
+	}
+	
+	.el-col-24{
+		width: 30px;
 	}
 
 	.el-pagination {
