@@ -36,9 +36,25 @@
 			<el-table-column prop="chanceCreateDate" label="创建时间" width="100px"></el-table-column>
 			<el-table-column label="操作">
 				<template slot-scope="scope">
-					<el-button type="text" size="small" @click="drawUpPlan(scope.row)">制定计划</el-button>
-					<el-button type="text" size="small" @click="exeSalePlan(scope.row)">执行计划</el-button>
-					<el-button type="text" size="small" @click="exeSucess(scope.row)">开发成功</el-button>
+					<el-row type="flex" justify="center">
+						<el-col>
+							<el-button type="text" title="制定计划" size="small" @click="drawUpPlan(scope.row)">
+								<i class="el-icon-document-add"></i>
+							</el-button>
+						</el-col>
+						<el-col>
+							<el-button type="text" title="执行计划" size="small" :style="{display:scope.row.chanceDueId==userId?'inline':'none'}"
+							 @click="exeSalePlan(scope.row)">
+								<i class="el-icon-s-promotion"></i>
+							</el-button>
+						</el-col>
+						<el-col>
+							<el-button type="text" title="开发成功" size="small" :style="{display:scope.row.chanceDueId==userId?'inline':'none'}"
+							 @click="devSuccess(scope.row)">
+								<i class="el-icon-finished"></i>
+							</el-button>
+						</el-col>
+					</el-row>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -52,6 +68,7 @@
 
 <script>
 	export default {
+		inject: ['reload'],
 		data() {
 			return {
 				pageNum: 1, //用于文本框中用户输入的内容，表示跳转到哪一页
@@ -61,18 +78,21 @@
 					chanceTitle: '',
 					chanceLinkman: '',
 					chanceStatus: 1
-				}
+				},
+				userId: this.$getSessionStorage('sysuser').userId
 			}
 		},
 		created() {
 			this.fenye(1)
 		},
 		methods: {
+			refresh() {
+				this.reload();
+			},
 			fenye(pageNum) {
 				this.$fenye('selectSaleChanceCount', 'selectSaleChancePaging', this.params, pageNum, this.$store.state.maxPageNum,
 					(response) => {
 						this.results = response;
-						// console.log(response.data);
 					})
 			},
 			handleCurrentChange(val) {
@@ -87,13 +107,53 @@
 				this.fenye(1);
 			},
 			drawUpPlan(row) {
-				this.$router.push('/index/drawUpPlan');
+				if (this.$getSessionStorage('sysuser').userRoleId == 3 && this.userId != row.chanceDueId) {
+					alert('您当前没有对这条数据制定计划的权限');
+					return;
+				}
+				this.$router.push({
+					path: '/index/drawUpPlan',
+					query: {
+						chanceId: row.chanceId,
+						chanceCreateId: row.chanceCreateId,
+						chanceDueId: row.chanceDueId
+					}
+				});
 			},
 			exeSalePlan(row) {
-				this.$router.push('/index/exeSalePlan');
+				this.$router.push({
+					path: '/index/exeSalePlan',
+					query: {
+						chanceId: row.chanceId,
+						chanceCreateId: row.chanceCreateId,
+						chanceDueId: row.chanceDueId
+					}
+				});
 			},
-			exeSucess(row) {
-
+			devSuccess(row) {
+				this.$axios.post('updateSaleChanceStatusById', {
+						chanceId: row.chanceId,
+						chanceStatus: 2
+					})
+					.then((response) => {
+						this.reload();
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+				this.$axios.post('insertClientInfo', {
+						clientCode: this.$getSerialNum(),
+						clientName: row.chanceCustName,
+						clientCustId: row.chanceDueId
+					})
+					.then((response) => {
+						if (response.data == 1) {
+							alert('sucess');
+						}
+					})
+					.catch((error) => {
+						console.log(error);
+					})
 			}
 		}
 	}
@@ -123,5 +183,13 @@
 
 	.el-pagination {
 		text-align: center;
+	}
+
+	.el-table .el-button span i {
+		font-size: 16px;
+	}
+
+	.el-col-24 {
+		width: 30px;
 	}
 </style>
