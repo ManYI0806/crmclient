@@ -2,7 +2,9 @@
 	<div>
 		<el-breadcrumb separator="/">
 			<el-breadcrumb-item :to="{ path: '/' }"><i class="el-icon-s-home"></i></el-breadcrumb-item>
-			<el-breadcrumb-item><a href="/">统计报表</a></el-breadcrumb-item>
+			<el-breadcrumb-item>
+				<a href="/">统计报表</a>
+			</el-breadcrumb-item>
 			<el-breadcrumb-item>客户构成分析</el-breadcrumb-item>
 		</el-breadcrumb>
 		<el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -26,7 +28,6 @@
 				</el-table-column>
 			</el-table>
 		</template>
-		
 	</div>
 </template>
 
@@ -49,7 +50,7 @@
 				.catch((error) => {
 					console.log(error);
 				});
-		
+
 		},
 		methods: {
 			onSubmit() {
