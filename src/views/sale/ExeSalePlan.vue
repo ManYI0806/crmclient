@@ -7,7 +7,7 @@
 			<el-breadcrumb-item>营销管理</el-breadcrumb-item>
 			<el-breadcrumb-item>客户开发计划</el-breadcrumb-item>
 			<el-breadcrumb-item>执行开发计划</el-breadcrumb-item>
-			<el-button size="mini">开发成功</el-button>
+			<el-button size="mini" @click="devSuccess">开发成功</el-button>
 			<el-button size="mini" @click="drawUpPlan">制定计划</el-button>
 			<el-button size="mini" @click="stopPlan">终止开发</el-button>
 		</el-breadcrumb>
@@ -89,6 +89,7 @@
 
 <script>
 	export default {
+		inject: ['reload'],
 		data() {
 			return {
 				saleChance: {
@@ -126,7 +127,6 @@
 				})
 				.then((response) => {
 					this.createUser = response.data;
-					console.log(this.createUser);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -151,6 +151,34 @@
 				})
 		},
 		methods: {
+			refresh() {
+				this.reload();
+			},
+			devSuccess(){
+				this.$axios.post('updateSaleChanceStatusById', {
+						chanceId: this.saleChance.chanceId,
+						chanceStatus:2
+					})
+					.then((response) => {
+						// this.$router.push('/index/salePlanList');
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+				this.$axios.post('insertClientInfo',{
+					clientCode:this.$getSerialNum(),
+					clientName:this.saleChance.chanceCustName,
+					clientCustId:this.saleChance.chanceDueId
+				})
+				.then((response)=>{
+					if(response.data==1){
+						alert('sucess');
+					}
+				})
+				.catch((error)=>{
+					console.log(error);
+				})
+			},
 			drawUpPlan() {
 				this.$router.push({
 					path: '/index/drawUpPlan',
@@ -163,7 +191,8 @@
 			},
 			stopPlan() {
 				this.$axios.post('updateSaleChanceStatusById', {
-						chanceId: this.saleChance.chanceId
+						chanceId: this.saleChance.chanceId,
+						chanceStatus:3
 					})
 					.then((response) => {
 						alert('已终止开发');
@@ -180,7 +209,7 @@
 					})
 					.then((response) => {
 						if (response.data == 1) {
-							alert('保存成功');
+							this.reload();
 						} else {
 							alert('保存失败');
 						}
