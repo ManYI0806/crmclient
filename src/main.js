@@ -11,7 +11,7 @@ Vue.use(element)
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = "http://localhost:8081/crm/"
+axios.defaults.baseURL = "http://10.25.42.166:8081/crm/"
 Vue.prototype.$axios = axios
 
 Vue.prototype.$echarts = echarts
@@ -27,6 +27,19 @@ function getCurDate() {
 	return year + "-" + month + "-" + day;
 }
 Vue.prototype.$getCurDate = getCurDate;
+
+//获取流水号(时间戳+随机三位数)
+function getSerialNum(){
+	var now = new Date();
+	var year = now.getFullYear();
+	var month = now.getMonth() + 1;
+	var day = now.getDate();
+	month = month < 10 ? "0" + month : month;
+	day = day < 10 ? "0" + day : day;
+	return 'KH' + month + day + (Math.round(Math.random() * 23 + 100)).toString()
+}
+
+Vue.prototype.$getSerialNum = getSerialNum;
 
 //向sessionStorage中存储一个JSON对象
 function setSessionStorage(keyStr, value) {
