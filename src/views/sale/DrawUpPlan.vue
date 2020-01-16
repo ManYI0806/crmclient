@@ -7,7 +7,8 @@
 			<el-breadcrumb-item>营销管理</el-breadcrumb-item>
 			<el-breadcrumb-item>客户开发计划</el-breadcrumb-item>
 			<el-breadcrumb-item>制定开发计划</el-breadcrumb-item>
-			<el-button type="primary" size="mini" @click="exeSalePlan">执行计划</el-button>
+			<el-button type="primary" size="mini" :style="{display:this.$getSessionStorage('sysuser').userRoleId==2?'none':'inline'}"
+			 @click="exeSalePlan">执行计划</el-button>
 		</el-breadcrumb>
 
 		<el-row>
@@ -87,6 +88,7 @@
 
 <script>
 	export default {
+		inject: ['reload'],
 		data() {
 			return {
 				saleChance: {
@@ -124,7 +126,6 @@
 				})
 				.then((response) => {
 					this.createUser = response.data;
-					console.log(this.createUser);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -149,6 +150,9 @@
 				})
 		},
 		methods: {
+			refresh() {
+				this.reload();
+			},
 			exeSalePlan() {
 				// if(this.salePlanList.length==0){
 				// 	alert('请首先添加计划项');
@@ -164,6 +168,10 @@
 				});
 			},
 			editSalePlan(row) {
+				if(row.planTodo==''){
+					alert('计划项不能为空');
+					return;
+				}
 				this.$axios.post('updateSalePlanByPlanId', {
 						planId: row.planId,
 						planChcId: row.planChcId,
@@ -171,7 +179,8 @@
 					})
 					.then((response) => {
 						if (response.data == 1) {
-							alert('修改成功');
+							// alert('修改成功');
+							this.reload();
 						} else {
 							alert('修改失败');
 						}
@@ -189,7 +198,8 @@
 					})
 					.then((response) => {
 						if (response.data == 1) {
-							alert('删除成功');
+							// alert('删除成功');
+							this.reload();
 						} else {
 							alert('删除失败');
 						}
@@ -210,7 +220,8 @@
 					})
 					.then((response) => {
 						if (response.data == 1) {
-							alert('添加成功');
+							// alert('添加成功');
+							this.reload();
 						} else {
 							alert('添加失败');
 						}
