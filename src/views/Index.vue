@@ -35,7 +35,7 @@
 								<el-menu-item index="/index/dueClientServerList">服务分配</el-menu-item>
 								<el-menu-item index="/index/handleClientServerList">服务处理</el-menu-item>
 								<el-menu-item index="/index/clientServerFeedbackList">服务反馈</el-menu-item>
-								<el-menu-item index="/index/clientServerDetailedList">服务文档</el-menu-item>
+								<el-menu-item index="/index/clientServerDetailedList">服务归档</el-menu-item>
 							</el-menu-item-group>
 						</el-submenu>
 						<el-submenu index="4">
